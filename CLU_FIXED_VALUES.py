@@ -5,7 +5,7 @@ POSTCODE_FORMATS = ['\w\w\d\w\d\w\w', '\w\d\w\d\w\w', '\w\d\d\w\w', '\w\d\d\d\w\
 
 FIX_VALUES_JR = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
-              'Temp_Allowance_Location': 'UKBPF', 
+              'Temp_Allowance_Location': 'UKNBP', 
                'Location': 'HMS TRIUMPH',  
                'Status': 'Active Assignment', 'Perm_GYH_Mileage': '', 'Field_or_Shipboard': 'N',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
@@ -16,7 +16,7 @@ FIX_VALUES_JR = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason': '', 'Pe
 
 FIX_VALUES_SR = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
-              'Temp_Allowance_Location': 'UKBPF', 
+              'Temp_Allowance_Location': 'UKNBP', 
                'Location': 'HMS TRIUMPH', 
                'Status': 'Active Assignment', 'Perm_GYH_Mileage': '', 'Field_or_Shipboard': 'N',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
@@ -27,7 +27,7 @@ FIX_VALUES_SR = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason': '', 'Pe
 
 FIX_VALUES_GRUNTER_JO = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
-              'Temp_Allowance_Location': 'UKBPF', 
+              'Temp_Allowance_Location': 'UKNBP', 
               'Location': 'HMS TRIUMPH', 
                'Status': 'Active Assignment', 'Perm_GYH_Mileage': '', 'Field_or_Shipboard': 'N',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
@@ -38,7 +38,7 @@ FIX_VALUES_GRUNTER_JO = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason':
 
 FIX_VALUES_GRUNTER_SO = {'Temp_Allowance_Reason': 'T13', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
-              'Temp_Allowance_Location': 'UKBPF', 
+              'Temp_Allowance_Location': 'UKNBP', 
                'Location': 'HMS TRIUMPH', 
                'Status': 'Active Assignment', 'Perm_GYH_Mileage': '', 'Field_or_Shipboard': 'N',
                'Temp_Accomp_Status': '', 'Nationality': 'British',

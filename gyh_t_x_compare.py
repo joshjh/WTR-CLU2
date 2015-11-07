@@ -23,9 +23,14 @@ def run(SP_allow_db, sp_gyh_t_db, errors):
 
 def compare_match(gyh_object, allow_object, errors):
     # check mileages are the same
-    if float(gyh_object.Temporary_GYH_Mileage) != allow_object.GYH_T_Mileage_To_Nominated_Address:
-        print ('GYH_T_X_COMPARE: mileage does not match ', gyh_object.Temporary_GYH_Mileage,
-               allow_object.GYH_T_Mileage_To_Nominated_Address, allow_object.whois)
+    # value error gets produced where there is either a temp mileage blank (but on the report due to a perm mileage)
+    try:
+        if float(gyh_object.Temporary_GYH_Mileage) != allow_object.GYH_T_Mileage_To_Nominated_Address:
+            print ('GYH_T_X_COMPARE: mileage does not match ', gyh_object.Temporary_GYH_Mileage,
+                   allow_object.GYH_T_Mileage_To_Nominated_Address, allow_object.whois)
+    except ValueError as e:
+        print(allow_object.whois, ' Caused ValueError.')
+        errors.held_errors('{} caused {} error'.format(allow_object.whois, e))
 
     ps = allow_object.Full_GYH_T_Address
     ps2 = gyh_object.Post_Code.replace(' ', '') #knock out whitespace from JPA Postcode

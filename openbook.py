@@ -37,16 +37,21 @@ def openbook(workbook, sheet_type='USR'):
         sheet = openedbook.sheet_by_name('Departures 2015')
     elif sheet_type == 'OBIEE_GYH_T':
         sheet = openedbook.sheet_by_name('Sheet1')
+    elif sheet_type == 'TASBAT':
+        sheet = openedbook.sheet_by_name('HMS TRIUMPH')
+
     header = sheet.row_values(0)
     #fix for departures sheet, where header is on row 2
     if sheet_type == 'MT':
         header = sheet.row_values(1)
     if sheet_type == 'OBIEE_GYH_T':
         header = sheet.row_values(2)
+    if sheet_type == 'TASBAT':
+        header = sheet.row_values(0)
 
     for index in range(len(header)):
 
-        if sheet_type == 'ALW':
+        if sheet_type in ('ALW', 'TASBAT'):
             header[index] = header[index].replace(' ', '_')
             header[index] = header[index].replace('(', '_')
             header[index] = header[index].replace(')', '_')
@@ -98,6 +103,12 @@ def openbook(workbook, sheet_type='USR'):
             gyh_t_object = SP(gyh_t_dictionary['Surname'], gyh_t_dictionary['Service_Number'])
             gyh_t_object.setvalues(gyh_t_dictionary)
             unit.append(gyh_t_object)
+    elif sheet_type == 'TASBAT':
+        for x in range(1, sheet.nrows):
+            tasbat_dictionary = dict(zip(header, sheet.row_values(x)))
+            tasbat_object = SP(tasbat_dictionary['Misc_Ref_or_JPA_Claim_Number'], tasbat_dictionary['FullName'])
+            tasbat_object.setvalues(tasbat_dictionary)
+            unit.append(tasbat_object)
     return unit
 
 def fix_date(ex_date):

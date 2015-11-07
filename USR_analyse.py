@@ -12,10 +12,14 @@ def run(SP_object, SP_allow_db, errors):
     __check_fixed_values__(SP_object, errors)
     __check_against_ALW__(SP_object, SP_allow_db, errors)
     __check_acting_local__(SP_object, errors)
-
+    __check_pscat_sfa__(SP_object, errors)
     # not running the warrants until end of the year
    # __get_warrants__(SP_object)
 
+def __check_pscat_sfa__(SP_object, errors):
+    if SP_object.SFA_Occupied != '' and SP_object.Marital_Status in ('Category 5', 'Category 4', 'Catagory 3'):
+        print ('SP {} {} is PS Cat {} and has MQ Charges'.format(SP_object.whois, SP_object.Assignment_Number,
+                                                                                 SP_object.Marital_Status))
 def __check_acting_local__(SP_object, errors):
     if SP_object.Acting_Paid_Rank != '':
         print ('SP {} {} is Acting Local {} and should be in Supervisors Log'.format(SP_object.whois, SP_object.Assignment_Number,

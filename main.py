@@ -7,6 +7,9 @@ import openbook
 import error_log
 import USR_analyse
 import gyh_t_x_compare
+import tasbat
+import os
+import re
 
 def main(argv):
     # get options from the command line.  -h help. -i input file. -t type of input
@@ -30,6 +33,16 @@ def main(argv):
     SP_object_list = openbook.openbook('test-data/usr.xls', sheet_type='USR')
     SP_allow_db = openbook.openbook('test-data/allowdb.xls', sheet_type='ALW')
     SP_gyh_t_db = openbook.openbook('test-data/GYH_T.xls', sheet_type='OBIEE_GYH_T')
+
+    # dropping of multi tasbats with consistant naming - run each
+    for root, dirs, files in os.walk('test-data'):
+        for file in files:
+            f_tasbat = re.search('TASBAT', file)
+            if f_tasbat and os.path.isfile('test-data/' + f_tasbat.string):
+                print('TASBAT found file: {}, executing'.format(f_tasbat.string))
+                open_tasbat = openbook.openbook('test-data/' + f_tasbat.string, sheet_type='TASBAT')
+                tasbat.tasbat_execute(open_tasbat)
+
     # main loop through each person object generated from the USR.  Missing out persons without assignment number.
     for x in range(len(SP_object_list)):
         if SP_object_list[x].Assignment_Number != '':
