@@ -42,21 +42,24 @@ def openbook(workbook, sheet_type='USR'):
 
     header = sheet.row_values(0)
     #fix for departures sheet, where header is on row 2
+
     if sheet_type == 'MT':
         header = sheet.row_values(1)
     if sheet_type == 'OBIEE_GYH_T':
         header = sheet.row_values(2)
     if sheet_type == 'TASBAT':
         header = sheet.row_values(0)
+    if sheet_type == 'LVE':
+        header = sheet.row_values(4)
 
     for index in range(len(header)):
 
-        if sheet_type in ('ALW', 'TASBAT'):
+        if sheet_type in ('ALW', 'TASBAT', 'LVE'):
             header[index] = header[index].replace(' ', '_')
             header[index] = header[index].replace('(', '_')
             header[index] = header[index].replace(')', '_')
             header[index] = header[index].replace('__', '_')
-            # print (header[index])
+            print (header[index])
 
         else:
             header[index] = header[index].replace(' ', '_')
@@ -79,7 +82,7 @@ def openbook(workbook, sheet_type='USR'):
             AL_object.setvalues(al_dictionary)
             unit.append(AL_object)
     elif sheet_type == 'LVE':
-        for x in range(1, sheet.nrows):
+        for x in range(5, sheet.nrows):
             lve_dictionary = dict(zip(header, sheet.row_values(x)))
             lve_object = SP(lve_dictionary['Full_Name'], lve_dictionary['Employee_Number'])
             lve_object.setvalues(lve_dictionary)
