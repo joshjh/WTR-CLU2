@@ -31,42 +31,37 @@ def openbook(workbook, sheet_type='USR'):
         sheet = openedbook.sheet_by_name('Faslane')
     elif sheet_type == 'LVE':
         sheet = openedbook.sheet_by_name('Absence Details')
+        header = sheet.row_values(4)
     elif sheet_type == 'APR':
         sheet = openedbook.sheet_by_name('2015')
     elif sheet_type == 'MT':
         sheet = openedbook.sheet_by_name('Departures 2015')
+        header = sheet.row_values(1)
     elif sheet_type == 'OBIEE_GYH_T':
         sheet = openedbook.sheet_by_name('Sheet1')
+        header = sheet.row_values(2)
     elif sheet_type == 'TASBAT':
         sheet = openedbook.sheet_by_name('HMS TRIUMPH')
-
-    header = sheet.row_values(0)
-    #fix for departures sheet, where header is on row 2
-
-    if sheet_type == 'MT':
-        header = sheet.row_values(1)
-    if sheet_type == 'OBIEE_GYH_T':
-        header = sheet.row_values(2)
-    if sheet_type == 'TASBAT':
         header = sheet.row_values(0)
-    if sheet_type == 'LVE':
-        header = sheet.row_values(4)
+
+    # if header was not defined above, we will set it to the top line (0)
+    try:
+        header
+
+    except NameError:
+        header = sheet.row_values(0)
 
     for index in range(len(header)):
 
-        if sheet_type in ('ALW', 'TASBAT', 'LVE'):
+        if sheet_type in ('ALW', 'TASBAT'):
             header[index] = header[index].replace(' ', '_')
             header[index] = header[index].replace('(', '_')
             header[index] = header[index].replace(')', '_')
             header[index] = header[index].replace('__', '_')
-            print (header[index])
+            # print (header[index])
 
         else:
             header[index] = header[index].replace(' ', '_')
-
-    #debug
-    if sheet_type == 'MT':
-        print('MT headers:', header)
 
     unit = []
     if sheet_type == 'USR':
