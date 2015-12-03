@@ -2,5 +2,6 @@
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="16b27fad-8e2a-470e-ac8a-c3731e9f5ae5" kpf_version="5" name="WTR-CLU2-komodoproject.komodoproject">
 <preference-set idref="16b27fad-8e2a-470e-ac8a-c3731e9f5ae5" id="project" preftype="project">
+  <long id="prefs_version">1</long>
 </preference-set>
 </project>

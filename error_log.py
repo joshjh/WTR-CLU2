@@ -13,3 +13,9 @@ class held_errors:
     def dump_held_errors(self):
         print('\n ----DUMPING ERRORS AND WARNINGS::: ', end='\n')
         print (self.errors_in_string)
+
+
+        
+    
+        
+    

@@ -1,5 +1,5 @@
 __author__ = 'josh'
-
+from CLU_FIXED_VALUES import bcolors
 import getopt
 import sys
 import openbook
@@ -39,29 +39,31 @@ def main(argv):
             f_allowdb = re.search('-Allowance Database', file)
             if f_tasbat and os.path.isfile('test-data/' + f_tasbat.string):
                 f_found_files.append('tasbat')
-                print('TASBAT found file: {}, executing'.format(f_tasbat.string))
+                print(bcolors.OKGREEN + 'TASBAT found file: {}, executing'.format(f_tasbat.string) + bcolors.ENDC)
                 open_tasbat = openbook.openbook('test-data/' + f_tasbat.string, sheet_type='TASBAT')
                 tasbat.tasbat_execute(open_tasbat)
                 
             if f_usr and os.path.isfile('test-data/' + f_usr.string) and 'usr' not in f_found_files:
-                print('USR found file: {}, executing'.format(f_usr.string))
+                print(bcolors.OKGREEN + 'USR found file: {}, executing'.format(f_usr.string) + bcolors.ENDC)
                 SP_object_list = openbook.openbook('test-data/' + f_usr.string, sheet_type='USR')
                 f_found_files.append('usr')
                 
             if f_allowdb and os.path.isfile('test-data/' + f_allowdb.string) and 'alw' not in f_found_files:
-                print('Allowance DB found file: {}, executing'.format(f_allowdb.string))
+                print(bcolors.OKGREEN + 'Allowance DB found file: {}, executing'.format(f_allowdb.string) + bcolors.ENDC)
                 SP_allow_db = openbook.openbook('test-data/' + f_allowdb.string, sheet_type='ALW')
                 f_found_files.append('alw')
                 
     # main loop through each person object generated from the USR.  Missing out persons without assignment number.
     for x in range(len(SP_object_list)):
         if SP_object_list[x].Assignment_Number != '':
-            print('\nIDENTIFIED ANOMOLIES FOR SP {} {}'.format(SP_object_list[x].whois, str(SP_object_list[x].Assignment_Number)[:8]))
+            print(bcolors.BOLD + '\nIDENTIFIED ANOMOLIES FOR SP {} {}'.format(SP_object_list[x].whois,
+                                str(SP_object_list[x].Assignment_Number)[:8]) + bcolors.ENDC)
             # the main call for the USR to check the current object
             USR_analyse.run(SP_object_list[x], SP_allow_db, errors)
 
         else:
-            errors.held_errors('SP: ' + SP_object_list[x].whois[0] + ' ' + SP_object_list[x].whois[1] +' is a unarrived entity')
+            errors.held_errors('SP: ' + SP_object_list[x].whois[0] + ' ' + SP_object_list[x].whois[1] +
+                                                                            ' is a unarrived entity')
 
     # gyh_t_x_compare.run(SP_allow_db, SP_gyh_t_db, errors)
     errors.dump_held_errors()

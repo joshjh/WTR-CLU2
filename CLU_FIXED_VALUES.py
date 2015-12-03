@@ -52,3 +52,13 @@ FIX_VALUES_JUNIOR_RATES_RANKS = ('OR2|OR Main|01', 'OR4|OR Main|01', 'OR2|OR Mai
 FIX_VALUES_SENIOR_RATES_RANKS = ('OR6|OR Main|01', 'OR7|OR Main|01', 'OR8|OR Main|01', 'OR9|OR Main|01, OR6|OR Main|02',
                                      'OR7|OR Main|02', 'OR8|OR Main|02', 'OR9|OR Main|02', 'OR9|OR Main|01')
 FIX_VALUES_JUNIOR_GRUNTERS_RANKS = ('OF1|OF Main|01', 'OF2|OF Main|01', 'OF1|OF Main|02', 'OF2|OF Main|02')
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
