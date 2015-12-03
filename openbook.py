@@ -28,7 +28,7 @@ def openbook(workbook, sheet_type='USR'):
     if sheet_type == 'USR':
         sheet = openedbook.sheet_by_name('Full USR')
     elif sheet_type == 'ALW':
-        sheet = openedbook.sheet_by_name('Faslane')
+        sheet = openedbook.sheet_by_name('Devonport')
     elif sheet_type == 'LVE':
         sheet = openedbook.sheet_by_name('Absence Details')
         header = sheet.row_values(4)
