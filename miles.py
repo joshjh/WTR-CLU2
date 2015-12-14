@@ -1,5 +1,5 @@
 __author__ = 'josh'
-import mechanize
+import requests
 import re
 
 def get_mileage(ps1, ps2):
@@ -8,17 +8,15 @@ def get_mileage(ps1, ps2):
     :param ps2: Our current post code
     :return: The mileage between the two from AA routefinder
     """
-    br = mechanize.Browser()
-    br.open('http://www.theaa.com/route-planner/classic/planner_main.jsp')
-    br.select_form = list(br.forms())[0]
-    br["fromPlace"] = ps1
-    br["toPlace"] = ps2
-    br.submit()  # AA routeplanner returns a confidence check for the post codes
-
-    # we know we are happy with the post codes so submit again
-    br.select_form(name="routePlanner")
-    response = br.submit()
-    for y in response:
+    ps1 = ps1.upper() + ', United Kingdom'
+    ps2 = ps2.upper() + ', United Kingdom'
+    br = requests.get('http://www.rac.co.uk/route-planner/mileage-calculator')
+    # print(br.text)
+    payload = {'destText-1':ps1, 'destText-2':ps2}
+    br = requests.post('http://www.rac.co.uk/route-planner/mileage-calculator', payload, payload)
+    print(br.text)
+    ## print ('HERE!!!: ', br.getParameter("miles"))
+    for y in br.text:
         match = re.search('miles', y)
 
         if match:
@@ -36,7 +34,7 @@ f = open('output_postcodes.txt', 'r')
 for line in f:
     elements = line.split(':')
     print ('checking ', elements)
-    print elements[0]
+    print (elements[0])
     checked_mileage = get_mileage('G848HL', elements[0])
     print(checked_mileage)
 

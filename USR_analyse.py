@@ -12,14 +12,30 @@ def run(SP_object, SP_allow_db, errors):
     __check_against_ALW__(SP_object, SP_allow_db, errors)
     __check_acting_local__(SP_object, errors)
     __check_pscat_sfa__(SP_object, errors)
+    __check_against_accomp_status__(SP_object, errors)
 # not running the warrants until end of the year
 # __get_warrants__(SP_object)
 
+def __check_against_accomp_status__(SP_object, errors):
+    if SP_object.Perm_GYH_Mileage != '' and SP_object.Perm_Accomp_Status not in ('US, VS'):
+        print (bcolors.OKBLUE + 'SP {} {} gets GYH T - possibly wrong Accompanied Status {}'.format(SP_object.whois,
+                                                                        SP_object.Assignment_Number,
+                                                                        SP_object.Perm_Accomp_Status) + bcolors.ENDC)
+    
+    if SP_object.SFA_Occupied != '' and SP_object.Perm_Accomp_Status not in ('A'):
+        print (bcolors.OKBLUE + 'SP {} {} has SFA charge - possibly wrong Accompanied Status {}'.format(SP_object.whois,
+                                                                        SP_object.Assignment_Number,
+                                                                        SP_object.Perm_Accomp_Status) + bcolors.ENDC)     
+    
 def __check_pscat_sfa__(SP_object, errors):
-    if SP_object.SFA_Occupied != '' and SP_object.Marital_Status in ('Category 5', 'Category 4', 'Catagory 3'):
+    if SP_object.SFA_Occupied != '' and SP_object.Marital_Status in ('Category 5', 'Category 4', 'Category 3'):
         print (bcolors.OKBLUE + 'SP {} {} is PS Cat {} and has MQ Charges'.format(SP_object.whois,
                                                                         SP_object.Assignment_Number,
                                                                         SP_object.Marital_Status) + bcolors.ENDC)
+        
+    if SP_object.SFA_Occupied !='' and SP_object.Perm_GYH_Mileage != '':
+        print (bcolors.OKBLUE + 'SP {} {} gets GYH T and occupies SFA?'.format(SP_object.whois,
+                                                                        SP_object.Assignment_Number) + bcolors.ENDC)
 def __check_acting_local__(SP_object, errors):
     if SP_object.Acting_Paid_Rank != '':
         print (bcolors.OKBLUE + 'SP {} {} is Acting Local {} and should be in Supervisors Log'.format(SP_object.whois,

@@ -37,6 +37,7 @@ def main(argv):
             f_tasbat = re.search('TASBAT', file)
             f_usr = re.search('-Unit Status Report', file)
             f_allowdb = re.search('-Allowance Database', file)
+            f_gyh_t = re.search('Claimant Report', file)
             if f_tasbat and os.path.isfile('test-data/' + f_tasbat.string):
                 f_found_files.append('tasbat')
                 print(bcolors.OKGREEN + 'TASBAT found file: {}, executing'.format(f_tasbat.string) + bcolors.ENDC)
@@ -52,7 +53,12 @@ def main(argv):
                 print(bcolors.OKGREEN + 'Allowance DB found file: {}, executing'.format(f_allowdb.string) + bcolors.ENDC)
                 SP_allow_db = openbook.openbook('test-data/' + f_allowdb.string, sheet_type='ALW')
                 f_found_files.append('alw')
-                
+             
+            if f_gyh_t and os.path.isfile('test-data/' + f_gyh_t.string) and 'gyh_t' not in f_found_files:
+                print(bcolors.OKGREEN + 'GYH_T found file: {}, executing'.format(f_gyh_t.string) + bcolors.ENDC)
+                SP_gyh_t_db = openbook.openbook('test-data/' + f_gyh_t.string, sheet_type='OBIEE_GYH_T')
+                f_found_files.append('gyh_t')   
+                gyh_t_x_compare.run(SP_allow_db, SP_gyh_t_db, errors)
     # main loop through each person object generated from the USR.  Missing out persons without assignment number.
     for x in range(len(SP_object_list)):
         if SP_object_list[x].Assignment_Number != '':
@@ -64,8 +70,6 @@ def main(argv):
         else:
             errors.held_errors('SP: ' + SP_object_list[x].whois[0] + ' ' + SP_object_list[x].whois[1] +
                                                                             ' is a unarrived entity')
-
-    # gyh_t_x_compare.run(SP_allow_db, SP_gyh_t_db, errors)
     errors.dump_held_errors()
 
 if __name__ == '__main__':
