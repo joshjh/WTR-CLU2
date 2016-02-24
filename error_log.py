@@ -1,6 +1,5 @@
 __author__ = 'josh'
 
-
 class held_errors:
 
     def __init__(self):

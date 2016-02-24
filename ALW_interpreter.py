@@ -12,6 +12,14 @@ def compare(allow_obj, sp_obj, errors):
     elif allow_obj.GYH_T_Mileage_To_Nominated_Address != sp_obj.Perm_GYH_Mileage:
         print(bcolors.FAIL + 'found mismatch between allowance DB GYH_T :{} and USR GYH_T {}'.format
               (allow_obj.GYH_T_Mileage_To_Nominated_Address, sp_obj.Perm_GYH_Mileage) + bcolors.ENDC)
+    
+    # if division by 10 gives a remainder, the gyh(t) mileage was not rounded
+    try:
+        if allow_obj.GYH_T_Mileage_To_Nominated_Address%10 != 0:
+            print(bcolors.FAIL + 'incorrect rounding: {} for allowance DB GYH_T mileage'.format
+              (allow_obj.GYH_T_Mileage_To_Nominated_Address) + bcolors.ENDC)
+    except TypeError as e:
+        pass
 
     if allow_obj.Live_Onboard == 'No' and sp_obj.Perm_SLA_Charged != '':
         print(bcolors.FAIL + 'does not have live onboard in ALWDB but Perm SLA is {}'.format

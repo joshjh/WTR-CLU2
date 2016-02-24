@@ -1,9 +1,7 @@
 __author__ = 'josh'
 
 import ALW_interpreter
-
 from CLU_FIXED_VALUES import *
-
 import datetime
 """ Analyse a USR object """
 
@@ -13,9 +11,19 @@ def run(SP_object, SP_allow_db, errors):
     __check_acting_local__(SP_object, errors)
     __check_pscat_sfa__(SP_object, errors)
     __check_against_accomp_status__(SP_object, errors)
+    __check_gyh_rounding__(SP_object, errors)
 # not running the warrants until end of the year
 # __get_warrants__(SP_object)
 
+def __check_gyh_rounding__(SP_object, errors):
+    try:
+        if SP_object.Perm_GYH_Mileage%10 != 0:
+             print(bcolors.FAIL + 'incorrect rounding: {} for USR GYH_T mileage'.format
+                   (SP_object.Perm_GYH_Mileage) + bcolors.ENDC)
+    except TypeError:
+        # non integer entries, whitespace and blank values will not work with %
+        pass
+    
 def __check_against_accomp_status__(SP_object, errors):
     if SP_object.Perm_GYH_Mileage != '' and SP_object.Perm_Accomp_Status not in ('US, VS'):
         print (bcolors.OKBLUE + 'SP {} {} gets GYH T - possibly wrong Accompanied Status {}'.format(SP_object.whois,
@@ -93,7 +101,7 @@ def __check_fixed_values__(SP_object, errors):
                                SP_object_dict[key], 'should be: ', FIX_VALUES_GRUNTER_SO[key] + bcolors.ENDC)
 
 def __get_warrants__(sp_object, END_OF_YEAR=1):
-    leave_year_end = datetime.datetime(2016, 4, 1)
+    leave_year_end = datetime.datetime(2017, 4, 1)
     # CATCH errors for non_fav dates (stub accounts etc)
     try:
         int_time = int(sp_object.FAV_Date)
@@ -114,14 +122,14 @@ def __get_warrants__(sp_object, END_OF_YEAR=1):
     try:
         int_time
         fav_date = year_zero + datetime.timedelta(days=int_time)
-        # print(leave_year_end)
-        # print(fav_date)
+        
         while running_time < leave_year_end and running_time < fav_date:
             warrants += 1
             running_time += datetime.timedelta(days=36)
 
     except NameError:
         pass
+    
     if END_OF_YEAR == 1:
         print ('has {} warrants to leave year ending {}'.format(warrants, leave_year_end))
     else:
