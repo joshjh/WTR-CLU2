@@ -100,6 +100,12 @@ def __check_fixed_values__(SP_object, errors):
                         print (bcolors.OKBLUE + key,' for Service Person: ',  SP_object.whois, 'is: ',
                                SP_object_dict[key], 'should be: ', FIX_VALUES_GRUNTER_SO[key] + bcolors.ENDC)
 
+            # allow for multiple organisations with Hasler.
+
+            if SP_object.Organization not in FIX_VALUES_ORGANISATIONS:
+                print(bcolors.OKBLUE + key, ' for Service Person: ', SP_object.whois, 'is: ',
+                      SP_object_dict[key], 'should be one of: ', FIX_VALUES_ORGANISATIONS + bcolors.ENDC)
+
 def __get_warrants__(sp_object, END_OF_YEAR=1):
     leave_year_end = datetime.datetime(2017, 4, 1)
     # CATCH errors for non_fav dates (stub accounts etc)

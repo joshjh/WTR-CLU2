@@ -26,7 +26,7 @@ def main():
             for file in files:
                 f_tasbat = re.search('TASBAT', file)
                 f_usr = re.search('-Unit Status Report', file)
-                f_allowdb = re.search('-Allowance Database', file)
+                f_allowdb = re.search('Allowance_Database', file)
                 f_gyh_t = re.search('Claimant Report', file)
                 
                 if f_tasbat and os.path.isfile('test-data/' + f_tasbat.string):

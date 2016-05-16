@@ -3,13 +3,15 @@ __author__ = 'josh'
 FIX_POSTCODE = 'PL22BG'
 POSTCODE_FORMATS = ['\w\w\d\w\d\w\w', '\w\d\w\d\w\w', '\w\d\d\w\w', '\w\d\d\d\w\w', '\w\w\d\d\w\w', '\w\w\d\d\d\w\w', '\w\w\d\d\w\w']
 
+FIX_VALUES_ORGANISATIONS = ('HASLER COY',  'MTM HASLER COY MA7 MEDICAL WELFARE DISCIPLINE')
+
 FIX_VALUES_JR = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
               'Temp_Allowance_Location': '', 
-               'Location': 'HMS TRIUMPH',  
+               'Location': 'PLYMOUTH (HMS DRAKE)',  
                'Status': 'Active Assignment', 'Field_or_Shipboard': '',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
-               'Perm_Allowance_Location': 'UKBPD', 'Organization': 'HMS TRIUMPH', 'Perm_HTD_Location': '',
+               'Perm_Allowance_Location': 'GBR',  'Perm_HTD_Location': '',
                'Addressable_Rank': '', 'Temp_HTD_Location': '', 'Perm_SLA_Charged': 'G1Z',
                'Perm_Field_or_Shipboard': 'N', 'Temp_SLA_Charged': '', 'Temp_SLA_Occupied': '',
                'Perm_SLA_Occupied': ''}
@@ -17,10 +19,10 @@ FIX_VALUES_JR = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': '', 'Perm_
 FIX_VALUES_SR = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
               'Temp_Allowance_Location': '', 
-               'Location': 'HMS TRIUMPH',  
+               'Location': 'PLYMOUTH (HMS DRAKE)',  
                'Status': 'Active Assignment', 'Field_or_Shipboard': '',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
-               'Perm_Allowance_Location': 'UKBPD', 'Organization': 'HMS TRIUMPH', 'Perm_HTD_Location': '',
+               'Perm_Allowance_Location': 'GBR', 'Organization': 'HASLER COY ', 'Perm_HTD_Location': '',
                'Addressable_Rank': '', 'Temp_HTD_Location': '', 'Perm_SLA_Charged': 'G1S',
                'Perm_Field_or_Shipboard': 'N', 'Temp_SLA_Charged': '', 'Temp_SLA_Occupied': '',
                'Perm_SLA_Occupied': ''}
@@ -28,10 +30,10 @@ FIX_VALUES_SR = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': '', 'Perm_
 FIX_VALUES_GRUNTER_JO = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
               'Temp_Allowance_Location': '', 
-               'Location': 'HMS TRIUMPH',  
+               'Location': 'PLYMOUTH (HMS DRAKE)',  
                'Status': 'Active Assignment', 'Field_or_Shipboard': '',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
-               'Perm_Allowance_Location': 'UKBPD', 'Organization': 'HMS TRIUMPH', 'Perm_HTD_Location': '',
+               'Perm_Allowance_Location': 'GBR',  'Perm_HTD_Location': '',
                'Addressable_Rank': '', 'Temp_HTD_Location': '', 'Perm_SLA_Charged': 'G1JO',
                'Perm_Field_or_Shipboard': 'N', 'Temp_SLA_Charged': '', 'Temp_SLA_Occupied': '',
                'Perm_SLA_Occupied': ''}
@@ -39,10 +41,10 @@ FIX_VALUES_GRUNTER_JO = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': ''
 FIX_VALUES_GRUNTER_SO = {'Temp_Allowance_Reason': '', 'Change_of_IBD_Reason': '', 'Perm_Allowance_Reason': 'P02', 'Gender': 'Male',
                'Type': 'Employee.Available for Assignment',  'PAYD/_LOS12/_GYH(S)': 'YNN',
               'Temp_Allowance_Location': '', 
-               'Location': 'HMS TRIUMPH',  
+               'Location': 'PLYMOUTH (HMS DRAKE)',  
                'Status': 'Active Assignment', 'Field_or_Shipboard': '',
                'Temp_Accomp_Status': '', 'Nationality': 'British',
-               'Perm_Allowance_Location': 'UKBPD', 'Organization': 'HMS TRIUMPH', 'Perm_HTD_Location': '',
+               'Perm_Allowance_Location': 'GBR',  'Perm_HTD_Location': '',
                'Addressable_Rank': '', 'Temp_HTD_Location': '', 'Perm_SLA_Charged': 'G1SO',
                'Perm_Field_or_Shipboard': 'N', 'Temp_SLA_Charged': '', 'Temp_SLA_Occupied': '',
                'Perm_SLA_Occupied': ''}

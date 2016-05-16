@@ -28,7 +28,8 @@ def openbook(workbook, sheet_type='USR'):
     if sheet_type == 'USR':
         sheet = openedbook.sheet_by_name('Full USR')
     elif sheet_type == 'ALW':
-        sheet = openedbook.sheet_by_name('Devonport')
+        sheet = openedbook.sheet_by_name('HASLER STAFF')
+        sheet2= openedbook.sheet_by_name('MA7 Allowance')
     elif sheet_type == 'LVE':
         sheet = openedbook.sheet_by_name('Absence Details')
         header = sheet.row_values(4)
@@ -70,12 +71,20 @@ def openbook(workbook, sheet_type='USR'):
             SP_object = SP(sp_dictionary['Last_Name'], sp_dictionary['Position'])
             SP_object.setvalues(sp_dictionary)
             unit.append(SP_object)
+
+            # now we have multiple tabs in the allowance db so this will need to be re-written.
     elif sheet_type == 'ALW':
         for x in range(1, sheet.nrows):
             al_dictionary = dict(zip(header, sheet.row_values(x)))
             AL_object = SP(al_dictionary['NAME'], al_dictionary['Service_No'])
             AL_object.setvalues(al_dictionary)
             unit.append(AL_object)
+        for x in range(1, sheet2.nrows):
+            al_dictionary = dict(zip(header, sheet2.row_values(x)))
+            AL_object = SP(al_dictionary['NAME'], al_dictionary['Service_No'])
+            AL_object.setvalues(al_dictionary)
+            unit.append(AL_object)
+
     elif sheet_type == 'LVE':
         for x in range(5, sheet.nrows):
             lve_dictionary = dict(zip(header, sheet.row_values(x)))

@@ -25,7 +25,7 @@ def compare(allow_obj, sp_obj, errors):
         print(bcolors.FAIL + 'does not have live onboard in ALWDB but Perm SLA is {}'.format
               (sp_obj.Perm_SLA_Charged) + bcolors.ENDC)
 
-    if allow_obj.Live_Onboard != 'No' and allow_obj.Live_Onboard != '' and sp_obj.Perm_SLA_Charged == '':
+    if allow_obj.Live_Onboard not in ('No', 'N') and allow_obj.Live_Onboard != '' and sp_obj.Perm_SLA_Charged == '':
         print(bcolors.FAIL + 'does live onboard in ALWDB but Perm SLA is {}'.format(sp_obj.Perm_SLA_Charged)
                                                                                      + bcolors.ENDC)
 
@@ -50,7 +50,7 @@ def compare(allow_obj, sp_obj, errors):
 def postcode_check(allow_obj, errors):
     # pull out postcode from the allowance object, then run it through the Python Miles Module against the global postcode
     # PS is postcode pulled from GYH_T_address line in allowance object
-    ps = allow_obj.GYH_T_Postcode
+    ps = allow_obj.Full_GYH_T_POSTCODE
     if str(ps) != '':
         
         line = str(allow_obj.NAME) + ':' + str(allow_obj.Service_No) + ':' + str(allow_obj.GYH_T_Mileage_To_Nominated_Address) + ':' + str(ps)
