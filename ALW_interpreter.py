@@ -6,7 +6,7 @@ from CLU_FIXED_VALUES import *
 
 def compare(allow_obj, sp_obj, errors):
     # compare allowance database GYH(M) to USR GYH(M)
-    if allow_obj.GYH_T_Mileage_To_Nominated_Address == 'N/A':
+    if allow_obj.GYH_T_Mileage_To_Nominated_Address in ('N/A', 'N', 'No'):
         pass
 
     elif allow_obj.GYH_T_Mileage_To_Nominated_Address != sp_obj.Perm_GYH_Mileage:
