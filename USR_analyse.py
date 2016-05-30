@@ -58,6 +58,12 @@ def __check_fixed_values__(SP_object, errors):
         if SP_object.Temp_Allowance_Location in ('ASSLQU', 'INTRANSIT', 'GBR'):
                 print(bcolors.OKBLUE + '--- ASSESS {} {} should be in the LANDED LOG'.format
                       (SP_object.whois, SP_object.Assignment_Number) + bcolors.ENDC)
+            # allow for multiple organisations with Hasler.
+
+        if SP_object.Organization not in FIX_VALUES_ORGANISATIONS:
+            print(bcolors.OKBLUE + 'Organisation for Service Person: ', SP_object.whois, 'is: ',
+                  SP_object.Organization, 'should be one of: ', str(FIX_VALUES_ORGANISATIONS) + bcolors.ENDC)
+
 
         for key in SP_object_dict:
 
@@ -100,11 +106,7 @@ def __check_fixed_values__(SP_object, errors):
                         print (bcolors.OKBLUE + key,' for Service Person: ',  SP_object.whois, 'is: ',
                                SP_object_dict[key], 'should be: ', FIX_VALUES_GRUNTER_SO[key] + bcolors.ENDC)
 
-            # allow for multiple organisations with Hasler.
 
-            if SP_object.Organization not in FIX_VALUES_ORGANISATIONS:
-                print(bcolors.OKBLUE + key, ' for Service Person: ', SP_object.whois, 'is: ',
-                      SP_object_dict[key], 'should be one of: ', FIX_VALUES_ORGANISATIONS + bcolors.ENDC)
 
 def __get_warrants__(sp_object, END_OF_YEAR=1):
     leave_year_end = datetime.datetime(2017, 4, 1)
