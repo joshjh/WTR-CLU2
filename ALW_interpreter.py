@@ -2,7 +2,12 @@ __author__ = 'josh'
 
 ''' Runner for allowance database matching, called by USR_analyse'''
 import re
+import miles
+
 from CLU_FIXED_VALUES import *
+from excel_timehack import excel_timehack
+from datetime import datetime
+from datetime import timedelta
 
 def compare(allow_obj, sp_obj, errors):
     # compare allowance database GYH(M) to USR GYH(M)
@@ -43,21 +48,40 @@ def compare(allow_obj, sp_obj, errors):
             print(bcolors.OKBLUE + 'Perm SLA is {} should be G4Z'.format(sp_obj.Perm_SLA_Charged, FIX_VALUES_GRUNTER_SO['Perm_SLA_Charged'],
                                                                     + bcolors.ENDC))
     
-    if allow_obj.Live_Onboard == '':
-        print(bcolors.FAIL + 'Live Onboard Flag MISSING' + bcolors.ENDC)
+    if allow_obj.Live_Onboard not in ('Y', 'N'):
+        print(bcolors.FAIL + 'Live Onboard Flag MISSING or corrupt/invalid' + bcolors.ENDC)
+    # print(allow_obj.__dict__)
+
+    try:
+        int(allow_obj.Annual_GYH_T_and_HDT_Documention_Check)
+        doc_check_anniversary = excel_timehack(allow_obj.Annual_GYH_T_and_HDT_Documention_Check)
+        today = datetime.today()
+        if doc_check_anniversary < today - timedelta(days=365):
+            print(bcolors.FAIL + 'OOD annual GYH/HTD check' + bcolors.ENDC)
+
+    except ValueError:
+        print(bcolors.FAIL + 'annual GYH/HTD check date not set' + bcolors.ENDC)
+
     postcode_check(allow_obj, errors)
 
 def postcode_check(allow_obj, errors):
     # pull out postcode from the allowance object, then run it through the Python Miles Module against the global postcode
     # PS is postcode pulled from GYH_T_address line in allowance object
     ps = allow_obj.Full_GYH_T_POSTCODE
-    if str(ps) != '':
-        
-        line = str(allow_obj.NAME) + ':' + str(allow_obj.Service_No) + ':' + str(allow_obj.GYH_T_Mileage_To_Nominated_Address) + ':' + str(ps)
-        with open('output_postcodes.txt','a') as fileout:
-                fileout.write(line)
-                fileout.write('\n')
-                fileout.close()
+    if not str(ps).upper() in ('', 'NA', 'N/A', 'N'):
+        try:
+            gmaps_distance = round(miles.get_mileage('PL22BG', ps), -1) # return rounded mileage
+            print(bcolors.OKGREEN + ' matched GMAPS: {} to ALLOWDB {}'.format(gmaps_distance,
+                                                        allow_obj.GYH_T_Mileage_To_Nominated_Address) + bcolors.ENDC)
+            if gmaps_distance < 5:
+                print(bcolors.FAIL + 'GYH Mileage Rounding FAIL' + bcolors.ENDC)
+            else:
+                if allow_obj.GYH_T_Mileage_To_Nominated_Address != gmaps_distance:
+                    print(bcolors.FAIL + 'GMAPS mileage {} != allowance db mileage {}'.format(gmaps_distance,
+                                                        allow_obj.GYH_T_Mileage_To_Nominated_Address)+ bcolors.ENDC)
+        except TypeError:  # TypeError is returned when miles.get_mileage drops out on postcode check
+            pass
+
     
 
 

@@ -1,41 +1,43 @@
 __author__ = 'josh'
-import requests
+import googlemaps
+import CLU_FIXED_VALUES
+from CLU_FIXED_VALUES import bcolors
 import re
+from datetime import datetime
 
-def get_mileage(ps1, ps2):
+def get_mileage(ps1='PL22BG', ps2=''):
     """
     :param ps1: The home post code
     :param ps2: Our current post code
-    :return: The mileage between the two from AA routefinder
+    :return: The mileage between the two from google api
     """
-    ps1 = ps1.upper() + ', United Kingdom'
-    ps2 = ps2.upper() + ', United Kingdom'
-    br = requests.get('http://www.rac.co.uk/route-planner/mileage-calculator')
-    # print(br.text)
-    payload = {'destText-1':ps1, 'destText-2':ps2}
-    br = requests.post('http://www.rac.co.uk/route-planner/mileage-calculator', payload, payload)
-    print(br.text)
-    ## print ('HERE!!!: ', br.getParameter("miles"))
-    for y in br.text:
-        match = re.search('miles', y)
+    try:
 
-        if match:
-            y = y.lstrip() # returns without left chars
-            y = round(float(y[:5]), -1) # round to closest 10
-            rsp = y
-            break
-        else:
-            rsp = '{}-ISBAD'.format(ps2)
-    return rsp
+        if check_ps_valid(ps1) and check_ps_valid(ps2):
 
-# file format [0] postcode, [1] name, [2] service no, [3] ALW_mileage
-print('\nstarting mileage comparison against output_miles.txt')
-f = open('output_postcodes.txt', 'r')
-for line in f:
-    elements = line.split(':')
-    print ('checking ', elements)
-    print (elements[0])
-    checked_mileage = get_mileage('G848HL', elements[0])
-    print(checked_mileage)
+            gmaps = googlemaps.Client(key='AIzaSyBOznCk1vrnWD_Gk6y5lZuX8BGBJM_8j4Y')
+            now = datetime.now()
 
+            directions_result = gmaps.directions(ps1, ps2, mode="driving", departure_time=now, units='imperial', region='uk',
+                             alternatives=False)
+            # google api returns a mess of nested dictionaries and lists
+            # the below offensive next drills though the dictionary nest, extracts the value of 'distance and txt, strips 'mi'
+            # out, then drops a integer, which is returned
+
+            distance = float(str(dict(dict(dict(directions_result[0].get('legs')[0])).get('distance')).get('text')).strip(' mi'))
+            return distance
+    except googlemaps.exceptions.ApiError:
+        print(bcolors.FAIL + ' GOOGLE API EXCEPTION - CANNOT CHECK POSTCODE' + bcolors.ENDC)
+
+def check_ps_valid(ps):
+
+    for x in range(len(CLU_FIXED_VALUES.POSTCODE_FORMATS)):
+        match = re.search(CLU_FIXED_VALUES.POSTCODE_FORMATS[x], ps.replace(' ', ''))
+
+    if match is None:
+        print(bcolors.FAIL + 'cannot match {} to re expression for postcodes' + bcolors.ENDC)
+        return False
+
+    else:
+        return True
 

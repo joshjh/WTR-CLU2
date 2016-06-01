@@ -6,7 +6,6 @@ from operator import itemgetter, attrgetter, methodcaller
 
 SP_Lve_records = openbook.openbook('test-data/Absence-Details.xls', sheet_type='LVE')
 
-
 class LR:
     def __init__(self, whois):
         self.whois = whois
