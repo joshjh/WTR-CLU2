@@ -42,9 +42,11 @@ def openbook(workbook, sheet_type='USR'):
         sheet = openedbook.sheet_by_name('Sheet1')
         header = sheet.row_values(2)
     elif sheet_type == 'TASBAT':
-        sheet = openedbook.sheet_by_name('HMS TRIUMPH')
+        sheet = openedbook.sheet_by_name('G46')
         header = sheet.row_values(0)
-
+    elif sheet_type == 'TDS':
+        sheet = openedbook.sheet_by_name('TDTS Spreadsheet 2016-17')
+        header = sheet.row_values(0)
     # if header was not defined above, we will set it to the top line (0)
     try:
         header
@@ -115,6 +117,8 @@ def openbook(workbook, sheet_type='USR'):
             tasbat_dictionary = dict(zip(header, sheet.row_values(x)))
             tasbat_object = SP(tasbat_dictionary['Misc_Ref_or_JPA_Claim_Number'], tasbat_dictionary['FullName'])
             tasbat_object.setvalues(tasbat_dictionary)
+            #this is a bit naughty.
+            tasbat_object.__setattr__('lineno', x+1)
             unit.append(tasbat_object)
     return unit
 

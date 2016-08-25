@@ -24,17 +24,17 @@ def main():
             # the folder test-data and assign the file path to f_*** 
 
             for file in files:
-                f_tasbat = re.search('TASBAT', file)
+               # f_tasbat = re.search('TASBAT', file)
                 f_usr = re.search('-Unit Status Report', file)
                 f_allowdb = re.search('Allowance_Database', file)
                 f_gyh_t = re.search('Claimant Report', file)
                 # to do f_landedlog
 
-                if f_tasbat and os.path.isfile('test-data/' + f_tasbat.string):
-                    f_found_files.append('tasbat')
-                    print(bcolors.OKGREEN + 'TASBAT found file: {}, executing'.format(f_tasbat.string) + bcolors.ENDC)
-                    open_tasbat = openbook.openbook('test-data/' + f_tasbat.string, sheet_type='TASBAT')
-                    tasbat.tasbat_execute(open_tasbat)
+               # if f_tasbat and os.path.isfile('test-data/' + f_tasbat.string):
+               #     f_found_files.append('tasbat')
+               #     print(bcolors.OKGREEN + 'TASBAT found file: {}, executing'.format(f_tasbat.string) + bcolors.ENDC)
+               #
+               #     tasbat.tasbat_execute(open_tasbat)
                 
                 # f_found_files will prevent the execution of more than one file of type usr or alw, which would cause
                 # carnage.
